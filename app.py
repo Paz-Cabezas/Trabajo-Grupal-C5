@@ -44,15 +44,6 @@ category_col = next((col for col in ["Category", "Product line"] if col in df.co
 categorias = df[category_col].unique() if category_col else []
 branches = df["Branch"].unique() if "Branch" in df.columns else []
 
-# Sidebar común para todas las secciones
-start_date = st.sidebar.date_input("📅 Fecha inicio", df["Date"].min())
-end_date = st.sidebar.date_input("📅 Fecha fin", df["Date"].max())
-selected_categories = st.sidebar.multiselect("🏷️ Categorías", categorias, default=categorias)
-selected_branches = st.sidebar.multiselect("🏬 Sucursales", branches, default=branches)
-
-# Filtrar datos según selecciones
-filtered_df = filter_data(df, start_date, end_date, selected_categories, category_col, selected_branches)
-
 # Navegación principal
 st.sidebar.title("Navegación")
 menu = st.sidebar.radio(
@@ -65,6 +56,15 @@ menu = st.sidebar.radio(
      "📌 Análisis Complementarios", 
      "📋 Resumen Ejecutivo"]
 )
+
+# Sidebar común para todas las secciones
+start_date = st.sidebar.date_input("📅 Fecha inicio", df["Date"].min())
+end_date = st.sidebar.date_input("📅 Fecha fin", df["Date"].max())
+selected_categories = st.sidebar.multiselect("🏷️ Categorías", categorias, default=categorias)
+selected_branches = st.sidebar.multiselect("🏬 Sucursales", branches, default=branches)
+
+# Filtrar datos según selecciones
+filtered_df = filter_data(df, start_date, end_date, selected_categories, category_col, selected_branches)
 
 # --- SECCIÓN: INICIO ---
 if menu == "🏠 Inicio":
